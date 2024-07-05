@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TWO_2023_wyklad_1</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="latex.css" />
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<div class="mdframed">
+<p>Piotr Dyszewski IM UWr   -   semestr letni 2023/2024</p>
+<p><span>Teoria wielkich odchyleń </span></p>
+<p><span><span>Wykład</span> 1: <span>Rzuty monetą</span> </span></p>
+<p><span>21.02.2024 </span></p>
+</div>
+<p>Teoria wielkich odchyleń zajmuje się asymptotycznym opisem zdarzeń
+rzadkich. To, czym jest zdarzenie rzadkie, oraz to, co rozumiemy przez
+jego asymptotykę, zależy od kontekstu rozważań. W trakcie wykładu
+postaramy się omówić spacery losowe, grafy losowe oraz procesy dyfuzji.
+Aby zdobyć podstawowe intuicje skupimy się na pierwszym modelu, który
+jest niczym innym jak sumą niezależnych zmiennych.</p>
+<h1 class="unnumbered" id="czym-są-duże-odchylenia">Czym są duże
+odchylenia?</h1>
+<p>Rozważmy przestrzeń probabilistyczną <span
+class="math inline">\((\Omega, \mathcal{F}, \mathbb{P})\)</span> na
+której określone są niezależne zmienne <span class="math inline">\(\{X_k
+\}_{k \in \mathbb{N}}\)</span>, <span class="math inline">\(\mathbb{N}=
+\{ 0, 1, 2, \ldots\}\)</span> o tym samym rozkładzie, takie, że <span
+class="math display">\[\mathbb{E}[X_k] = m &lt;\infty, \qquad
+\mathbb{V}ar[X_k] = \mathbb{E}[X_k^2] - \mathbb{E}[X_k]^2 = \sigma^2
+&lt;\infty.\]</span> Dla <span class="math inline">\(n \in
+\mathbb{N}\)</span> rozważmy <span class="math inline">\(S_0\)</span>,
+<span class="math inline">\(S_n =\sum_{k=1}^nX_k\)</span>. Wówczas z
+podstawowego kursu rachunku prawdopodobieństwa wiemy, że zachodzi mocne
+prawo wielkich liczb <span class="math display">\[S_n /n \to m \quad
+p.w.\]</span> które może być luźno sparafrazowane jako ,,dla dużych
+<span class="math inline">\(n\)</span>, <span
+class="math inline">\(S_n\)</span> wynosi w przybliżeniu <span
+class="math inline">\(m n\)</span>”. Znamy też centralne twierdzenie
+graniczne, <span class="math display">\[\label{eq:1:clt}
+    (S_n - m n)/\sqrt{n} \Rightarrow \mathcal{N}(0,\sigma),\]</span>
+gdzie <span class="math inline">\(\Rightarrow\)</span> oznacza zbieżność
+według rozkładu zmiennych losowych. Przez <span
+class="math inline">\(\mathcal{N}(0,1)\)</span> oznaczamy rozkład
+normalny na <span class="math inline">\(\mathbb{R}\)</span> o gęstości
+danej wzorem <span class="math display">\[\frac{1}{\sqrt{2 \pi}}
+e^{-x^2/2}.\]</span> Zbieżność  <a href="#{eq:1:clt}"><span
+class="upright"></span></a> oznacza, że błąd wspomnianego przybliżenia,
+czyli <span class="math inline">\(S_n-m n\)</span> jest typowo rzędu
+<span class="math inline">\(\sqrt{n}\)</span>. Jeżeli natomiast <span
+class="math inline">\(S_n -m n\)</span> jest rzędu większego niż <span
+class="math inline">\(\sqrt{n}\)</span> takie odchylenia należy uznać za
+nietypowe. Gdy <span class="math inline">\(S_n-mn\)</span> jest dużo
+większe niż <span class="math inline">\(\sqrt{n}\)</span> ale mniejsze
+niż <span class="math inline">\(n\)</span>, będizemy mówili o
+umiarkowanych odchyleniach. Dla ustalenia uwagi w trakcie wykładu
+skupimy się na sytuacji, gdy <span class="math inline">\(S_n-m
+n\)</span> jest rzędu <span class="math inline">\(n\)</span>. Odchylenia
+tego typu nazywamy dużymi. Przykładem takiego odchylenia jest zdarzenie
+<span class="math display">\[\{ S_n \geq a n \}, \qquad a&gt;m.\]</span>
+Z mocnego prawa wielkich liczb wiemy, że prawdopodobieństwo tego
+zdarzenia dąży do zera. Naszym celem będzie określenie jak szybko
+zachodzi ta zbieżność. Zazwyczaj do tego aby <span
+class="math inline">\(S_n &gt; a n\)</span> potrzeba aby dla liniowo
+wielu <span class="math inline">\(k\)</span> (rzędu <span
+class="math inline">\(n\)</span>), <span
+class="math inline">\(X_k\)</span> musi być istotnie większe niż średnia
+<span class="math inline">\(m\)</span>. To z kolei sprawia, że
+prawdopodobieństwo tego, że <span class="math inline">\(S_n &gt; a
+n\)</span> maleje wykładniczo szybko, czyli <span
+class="math display">\[\mathbb{P}[S_n &gt; a n] \approx e^{-I(a)n},
+\qquad a&gt;m.\]</span> Interesować nas będzie wykładnik tej zbieżności,
+który ściśle zapisuje się jako <span class="math display">\[\lim_{n \to
+\infty} \frac 1n \log \mathbb{P}[S_n \geq a n] = -I(a), \quad
+a&gt;m.\]</span> Funkcję <span class="math inline">\(I\)</span>
+charakteryzuje twierdzenie Cramera. Jednak zanim do niego przejdziemy
+sprawdzimy jak się zachowuje <span class="math inline">\(S_n\)</span> w
+przypadku rzutów symetryczną monetą.</p>
+<h1 class="unnumbered" id="rzuty-monetą">Rzuty monetą</h1>
+<p>Aby nabrać intuicji rozważmy przykład związany z rzutami monetą.
+Rozważać będziemy zmienne <span class="math inline">\(\{X_k\}_{k \in
+\mathbb{N}}\)</span> o rozkładzie <span
+class="math display">\[\mathbb{P}[X_k=0]=
+\mathbb{P}[X_k=1]=1/2.\]</span> Wówczas dla <span
+class="math inline">\(S_n = \sum_{k=1}^n X_k\)</span> mamy <span
+class="math inline">\(S_n/n \to \mathbb{E}[X_1]=1/2\)</span>. Badanie
+zdarzeń rzadkich, <span class="math inline">\(\{S_n&gt; an\}\)</span>
+dla <span class="math inline">\(a&gt;1/2\)</span>, jest w tym przypadku
+szczególnie przystępne, ponieważ zmienna <span
+class="math inline">\(S_n\)</span> ma rozkład Bernoullego.</p>
+<div class="mdframed">
+<div id="twr:1:coin" class="twr0">
+<p><strong>Twierdzenie 1</strong>. <em>Rozważmy zmienne losowe <span
+class="math inline">\(\{X_k\}_{k \in \mathbb{N}}\)</span>, które są iid
+z rozkładem <span class="math display">\[\mathbb{P}[X_k=0]=
+\mathbb{P}[X_k=1]=1/2.\]</span> Niech <span class="math inline">\(S_n =
+\sum_{k=1}^nX_k\)</span>. Wówczas dla wszystkich <span
+class="math inline">\(a&gt;1/2\)</span>, <span
+class="math display">\[\lim_{n \to \infty} \frac 1n \log \mathbb{P}[S_n
+\geq a n] = -I(a),\]</span> gdzie <span class="math display">\[I(z) =
+\left\{\begin{array}{cc} \log(2)+z\log(z) +(1-z)\log(1-z), &amp; z \in
+[0,1] \\ +\infty, &amp; \mbox{poza tym} \end{array}
+\right.\]</span></em></p>
+</div>
+</div>
+<figure>
+<div class="center">
+<img src="OBRAZY/01_coin.png" />
+</div>
+<figcaption>Wykres funkcji <span class="math inline">\(I\)</span> w
+<strong>Twierdzeniu <a href="#twr:1:coin" data-reference-type="ref"
+data-reference="twr:1:coin">1</a></strong></figcaption>
+</figure>
+<p>W dowodzie Twierdzenia <a href="#twr:1:coin"
+data-reference-type="ref" data-reference="twr:1:coin">1</a> skorzystamy
+ze wzoru Stirlinga.</p>
+<div class="zad*">
+<p><strong>Zadanie 1</strong>. <em>Pokaż, że dla każdego dodatnbiego
+<span class="math inline">\(n \in \mathbb{N}\)</span>, <span
+class="math display">\[n \log(n) -n+1 \leq \log(n!) \leq (n+1)\log(n+1)
+-n.\]</span> Wywnioskuj słabą wersją wzoru Stirlinga <span
+class="math display">\[\log(n!) = n\log(n) -n + O\left( \log(n)
+\right).\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Dowód Twierdzenia <a href="#twr:1:coin" data-reference-type="ref"
+data-reference="twr:1:coin">1</a>.</em> Dla <span
+class="math inline">\(a&gt;1\)</span> teza jest oczywista. Rozważmy więc
+<span class="math inline">\(a \in (1/2,1]\)</span>. Mamy <span
+class="math display">\[\mathbb{P}[S_n\geq an] =  2^{-n} \sum_{k \geq an}
+{n \choose k}.\]</span> Niech <span class="math display">\[Q_n(a) =
+\max_{k \geq an} {n \choose k} = {n \choose \lceil an \rceil}.\]</span>
+Korzystając ze słabej wersji wzoru Stirlinga, <span
+class="math display">\[\log(Q_n(a)) = n\log(n)-
+an\log(an)-(1-a)n\log((1-a)n) + O \left( \log(n) \right)\]</span>
+otrzymujemy <span class="math display">\[\lim_{n \to \infty} \frac 1n
+\log Q_n(a) = -a\log(a)-(1-a)\log(1-a).\]</span> Korzystając teraz z
+nierówności <span class="math display">\[2^{-n}Q_n(a) \leq
+\mathbb{P}[S_n \geq an] \leq n 2^{-n} Q_n(a)\]</span> otrzymujemy
+tezę. ◻</p>
+</div>
+<div class="uw">
+<p><strong>Uwaga 2</strong>. <em>Przez symetrię, dla <span
+class="math inline">\(a&lt;1/2\)</span>, <span
+class="math display">\[\lim_{n \to \infty} \frac 1n \log \mathbb{P}[S_n
+\leq a n] = -I(a).\]</span> Co z kolei pociąga dla <span
+class="math inline">\(\delta&gt;0\)</span>, <span
+class="math display">\[\lim_{n \to \infty} \frac 1n \log
+\mathbb{P}[|S_n/n-1/2| &gt;\delta ] = -I(1/2+\delta)&lt;0.\]</span> Idąc
+dalej <span class="math display">\[\sum_{n=1}^\infty
+\mathbb{P}[|S_n/n-1/2|&gt;\delta]&lt;\infty.\]</span> Co po odwołaniu
+się do Lematu Borela-Cantelliego i przejściu granicznym z <span
+class="math inline">\(\delta\)</span> do zera daje niezależny dowód
+<span class="math inline">\(S_n/n \to 1/2\)</span> p.w.</em></p>
+</div>
+<div class="pd">
+<p><strong>Przykład 3</strong>. <em>Załóżmy, że zmienne <span
+class="math inline">\(\{X_k\}_{k \in \mathbb{N}}\)</span> modelują rzuty
+symetryczną monetą, tj. <span
+class="math inline">\(\mathbb{P}[X_k=0]=\mathbb{P}[X_k=1]=1/2\)</span>.
+Wówczas dla <span class="math inline">\(a&gt;1/2\)</span>, <span
+class="math display">\[\{S_n \geq an \} = \{ \#\{ j \: : \: X_j=1\} \geq
+a n\}.\]</span> Dla <span class="math inline">\(k \geq an \geq
+n/2\)</span> prawdopodobieństwo <span
+class="math display">\[\mathbb{P}[\#\{ j \: : \: X_j=1\}  =k] = {n
+\choose k}2^{-n}\]</span> jest maksymalizowane dla <span
+class="math inline">\(k = \lceil an \rceil\)</span>. Oznacza to, że
+najbardziej prawdopodobnym scenariuszem dla którego <span
+class="math inline">\(\{S_n \geq an\}\)</span> jest to, że dla <span
+class="math inline">\(\lceil an \rceil\)</span> wartości <span
+class="math inline">\(j\)</span>, <span
+class="math inline">\(X_j=1\)</span>.</em></p>
+</div>
+<p>W trakcie wykładu będziemy też badali przyczynę dużych odchyleń.
+Jednym ze sposobów na jej zrozumienie jest zbadanie zachowania próbki na
+rzadkim zdarzeniu.</p>
+<div class="mdframed">
+<div id="twr:1:coin2" class="twr0">
+<p><strong>Twierdzenie 4</strong>. <em>Niech zmienne <span
+class="math inline">\(\{X_k\}_{k \in \mathbb{N}}\)</span> będą iid z
+rozkładem <span class="math display">\[\mathbb{P}[X_k=0]=
+\mathbb{P}[X_k=1]=1/2.\]</span> Niech <span class="math inline">\(S_n =
+\sum_{k=1}^nX_k\)</span>. Wówczas dla wszystkich <span
+class="math inline">\(a&gt;1/2\)</span>, <span
+class="math display">\[\lim_{n \to \infty}  \mathbb{P}[X_1=1 \: | \: S_n
+\geq a n] = a.\]</span></em></p>
+</div>
+</div>
+<p>Powyższy wynik mówi, że jeżeli <span class="math inline">\(S_n\geq
+an\)</span> to dla dużych <span class="math inline">\(n\)</span>, to
+<span class="math inline">\(X_1=1\)</span> z prawdopodobieństwem <span
+class="math inline">\(a&gt;1/2\)</span>. Zatem pod warunkiem <span
+class="math inline">\(\{S_n \geq an\}\)</span> z większym
+prawdopodobieństwem obserwujemy <span
+class="math inline">\(X_1=1\)</span>.</p>
+<div class="proof">
+<p><em>Proof.</em> Dowód przeprowadzimy w oparciu o analizę podobną do
+tej z dowodu Twierdzenia <a href="#twr:1:coin" data-reference-type="ref"
+data-reference="twr:1:coin">1</a>. Zauważmy najpierw, że dla <span
+class="math inline">\(n_a = \lceil an \rceil\)</span> mamy <span
+class="math display">\[\mathbb{P}[S_n \geq an] = 2^{-n} \sum_{k=n_a}^n
+{n \choose k}
+        = 2^{-n} {n \choose n_a} \sum_{k=n_a}^n \frac{
+(n-n_a)\cdots(n-k) }{ (n_a+1)\cdots k}.\]</span> Zauważmy, że <span
+class="math display">\[\sum_{k=n_a}^n \frac{ (n-n_a)\cdots(n-k) }{
+(n_a+1)\cdots k} \to
+        \sum_{j=0}^\infty \left( \frac{1-a}{a}
+\right)^j&lt;\infty.\]</span> Z drugiej strony <span
+class="math display">\[\begin{gathered}
+        \mathbb{P}[X_1=1, \: S_{n}\geq n_a] = \frac 12
+\mathbb{P}[S_{n-1}\geq n_a-1]
+        = 2^{-n} \sum_{k=n_a-1}^n {n-1 \choose k} \\
+        2^{-n} {n-1 \choose n_a-1} \sum_{k=n_a-1}^{n-1}
+\frac{(n-n_a)\cdot (n-1-k)}{ n_a \cdots k }
+    
+\end{gathered}\]</span> gdzie <span
+class="math display">\[\sum_{k=n_a-1}^{n-1} \frac{(n-n_a)\cdot (n-1-k)}{
+n_a \cdots k }
+        \to\sum_{j=0}^\infty \left( \frac{1-a}{a}
+\right)^j&lt;\infty.\]</span> Zbierając skrupulatnie zebrane oszacowania
+dostajemy <span class="math display">\[\mathbb{P}[X_1=1 \: | \: S_n \geq
+an] = \frac{{n -1 \choose n_a-1}}{{n \choose n_a}} (1+o(1)) =
+\frac{n_a}{n}(1+o(1)) \to a.\]</span> ◻</p>
+</div>
+<h1 class="unnumbered"
+id="twierdzenie-sanova-dla-skończonego-alfabetu">Twierdzenie Sanova dla
+skończonego alfabetu</h1>
+<p>Naszym celem jest prezentacja możliwie ogólnych narzędzi, które
+pozwalają stwierdzić jaka jest najbardziej prawdopodobna konfiguracja
+<span class="math inline">\(X_1, \ldots X_n\)</span> dla której
+obserwujemy rzadką wartość <span class="math inline">\(S_n/n\)</span>. W
+tym celu przejdziemy na nieco bardziej abstrakcyjny język. Zauważmy, że
+<span class="math inline">\(S_n/n\)</span> jest niczym innym jak średnią
+empiryczną z liczb <span class="math inline">\(X_1, X_2, \ldots,
+X_n\)</span>. Aby badać wartości ostatniego ciągu rozważać będziemy
+miarę empiryczną <span class="math display">\[L_n = \frac 1n
+\sum_{k=1}^n \delta_{X_k}.\]</span> Wówczas <span
+class="math inline">\(L_n\)</span> jest losową miarą na <span
+class="math inline">\(\mathbb{R}\)</span>. Koncept ten można
+sformalizować zadając strukturę <span
+class="math inline">\(\sigma\)</span>-ciała na przestrzeni miar
+probabilistycznych na prostej. Tak daleko posunięty formalizm nie będzie
+nam jednak potrzebny. Miara empiryczna <span
+class="math inline">\(L_n\)</span> wiąże się ze średnią empiryczną <span
+class="math inline">\(S_n/n\)</span> poprzez <span
+class="math display">\[S_n/n = \int s \: L_n(\mathrm{d}s).\]</span>
+Powyższa równość będzie dla nas oznaczać, że rzadkie zdarzenia dla <span
+class="math inline">\(S_n\)</span> pochodzą od zdarzeń rzadkich dla
+<span class="math inline">\(L_n\)</span>. Jednakże te ostatnie dają
+dokładniejszą informację o ciągu <span class="math inline">\(X_1, X_2,
+\ldots, X_n\)</span>.</p>
+<p>Na początek zakładać będziemy, że zmienne <span
+class="math inline">\(\{X_k\}_{k \in \mathbb{N}}\)</span> tylko
+skończenie wiele wartości. Powiemy, że spełniony jest warunek <span
+class="math inline">\((\Gamma)\)</span> jeżeli zmienne <span
+class="math inline">\(\{X_k\}_{k \in \mathbb{N}}\)</span> przyjmują
+wartości w skończonym zbiorze <span
+class="math inline">\(\Gamma\)</span> takim, że <span
+class="math display">\[\Gamma = \{1, 2, \ldots, r \} \subseteq
+\mathbb{N}\]</span> dla pewnego <span class="math inline">\(r \in
+\mathbb{N}\)</span> przy czym <span class="math display">\[\rho_s =
+\mathbb{P}[X_1 = s]&gt;0, \qquad s \in \Gamma.\]</span> Miara empiryczna
+<span class="math inline">\(L_n\)</span> jest losowym elementem
+przestrzeni miar probabilistycznych na <span
+class="math inline">\(\Gamma\)</span> oznaczanej przez <span
+class="math display">\[M_1(\Gamma) =  \left\{ \nu = (\nu_1, \nu_2,
+\ldots, \nu_r) \in [0,1]^r \: : \: \sum_{j=1}^r \nu_j=1
+\right\}.\]</span> Podkreślmy, że <span
+class="math inline">\(\nu=(\nu_1, \nu_2, \ldots, n_r)\)</span> jest
+utożsamione z miarą <span class="math display">\[\nu = \sum_{k=1}^r
+\nu_j \delta_j.\]</span> Na <span
+class="math inline">\(M_1(\Gamma)\)</span> rozważać będziemy metrykę
+pochodzącą od normy całkowitego wahania, <span
+class="math display">\[\mathrm{d}(\mu, \nu) = \frac 12 \sum_{j=1}^r
+|\mu_j-\nu_j|.\]</span></p>
+<div class="mdframed">
+<div class="twr0">
+<p><strong>Twierdzenie 5</strong>. <em>Załóżmy, że spełniony jest
+warunek <span class="math inline">\((\Gamma)\)</span>. Dla miary
+empirycznej zadanej przez <span class="math display">\[L_n = \frac
+1n\sum_{k=1}^n\delta_{X_k}\]</span> zachodzi <span
+class="math inline">\(L_n \to \rho\)</span> p.w.</em></p>
+</div>
+</div>
+<p>Teza powyższego twierdzenia jest równoważna z <span
+class="math display">\[\lim_{n \to \infty} \mathrm{d}(L_n, \rho) = 0 \:
+p.w.\]</span></p>
+<div class="proof">
+<p><em>Proof.</em> Jest to wniosek z mocnego prawa wielkich liczb.
+Zauważmy najpierw, że miara empiryczna zapisuje się jako <span
+class="math display">\[L_n = \sum_{j=1}^n L_{n,j}\delta_j,\]</span>
+gdzie <span class="math display">\[L_{n,j} = \frac 1n \# \{ k \in \{1,2,
+\ldots, n \} \: : \: X_k=j \}.\]</span> Wystarczy zauważyć, że skoro
+<span class="math inline">\(\Gamma\)</span> jest zbiorem skończonym, to
+<span class="math display">\[\frac 1n \# \{ k \in \{1,2, \ldots, n \} \:
+: \: X_k=j \} = \frac{1}{n} \sum_{k=1}^n \mathbbm{1}_{\{ X_k=j \}} \to
+\rho_j\]</span> pociąga <span class="math display">\[\lim_{n \to \infty}
+\mathrm{d}(L_n, \rho)  = \lim_{n \to \infty} \frac 12 \sum_{j=1}^r
+\left| L_{n,j}-\rho_j\right|= 0 \: p.w.\]</span> ◻</p>
+</div>
+<p>Wobec powyższego dla <span
+class="math inline">\(\epsilon&gt;0\)</span> zbiór <span
+class="math display">\[\{ \mathrm{d}(L_n, \rho)&gt;\epsilon \}\]</span>
+nazwalibyśmy zdarzeniem rzadkim. Chcemy teraz zbadać prawdopodobieństwo
+z jakim powyższe zdarzenie zachodzi. Dla <span
+class="math inline">\(a&gt;0\)</span> przez <span
+class="math inline">\(\overline{B_a(\rho)}\)</span> oznaczać będziemy
+domkniętą kulę w <span class="math inline">\(M_1(\Gamma)\)</span> o
+środku w punkcie <span class="math inline">\(\rho\)</span> i promieniu
+<span class="math inline">\(a&gt;0\)</span>, tj. <span
+class="math display">\[\overline{B_a(\rho)} = \{ \nu \in M_1(\Gamma) \:
+:\: \mathrm{d}(\rho, \nu) \leq a\}.\]</span> Wówczas <span
+class="math display">\[\{ \mathrm{d}(L_n, \rho)&gt;\epsilon \} = \left\{
+L_n \in \overline{B_\epsilon(\rho)}^c \right\}.\]</span> Podkreślmy w
+tym miejscu, że <span
+class="math inline">\(\overline{B_\epsilon(\rho)}^c\)</span> jest
+otwartym podzbiorem <span
+class="math inline">\(M_1(\Gamma)\)</span>.</p>
+<div class="mdframed">
+<div id="twr:1:sanov" class="twr0">
+<p><strong>Twierdzenie 6</strong>. <em>Załóżmy warunek <span
+class="math inline">\((\Gamma)\)</span>. Wówczas dla każdego otwartego
+<span class="math inline">\(A \subseteq M_1(\Gamma)\)</span>, <span
+class="math display">\[\lim_{n \to \infty} \frac 1n \log\mathbb{P}[ L_n
+\in A] = - \inf_{\nu \in A} H(\nu|\rho),\]</span> gdzie <span
+class="math display">\[H(\nu| \rho) = \sum_{j=1}^r \nu_j \log(\nu_j/
+\rho_j).\]</span></em></p>
+</div>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Niech <span class="math display">\[K_n  = \left\{ k
+=(k_1, k_2, \ldots, k_r) \in \mathbb{N}^r \: : \: \sum_{j=1}^r k_j=n
+\right\}.\]</span> Wówczas <span class="math inline">\(\frac 1n K_n
+\subseteq M_1(\Gamma)\)</span>. Poprzez utożsamienie <span
+class="math inline">\(k \in K_n\)</span> z miarą <span
+class="math inline">\(\nu_n(k) = k/n\)</span>. Dla każdego <span
+class="math inline">\(k \in K_n\)</span>, <span
+class="math display">\[\mathbb{P}\left[ \forall j\in \Gamma, \: L_n(j) =
+\frac {k_j}n \right]
+        = n! \prod_{j\in \Gamma} \frac{\rho_j^{k_j}}{k_j!}.\]</span>
+Podobnie jak w dowodzie Twierdzenia <a href="#twr:1:coin"
+data-reference-type="ref" data-reference="twr:1:coin">1</a> rozważmy
+<span class="math display">\[Q_n(a) = \max_{k \in K_n \: : \: \nu_n(k)
+\in A }
+        \left( n! \prod_{s=1}^r \frac{\rho_s^{k_s}}{ k_s!}
+\right).\]</span> Skoro <span class="math inline">\(L_n \in \frac
+1nK_n\)</span>, to <span class="math display">\[Q_n(a) \leq
+\mathbb{P}[L_n \in A] \leq |K_n| Q_n(a).\]</span> Ze wzoru Stirlinga
+<span class="math display">\[\frac 1n \log\left( n! \prod_{s=1}^r
+\frac{\rho_s^{k_s}}{k_s!} \right)
+        = \sum_{s=1}^r \frac{k_s}{n} \left( \log \rho_s - \log
+\frac{k_s}{n} \right) + O \left( \frac{\log(n)}{n} \right)\]</span>
+jednostajnie ze względu na <span class="math inline">\(k \in
+K_n\)</span>. Skoro suma po prawej stronie jest równa <span
+class="math inline">\(-H(\nu_n(k)|\rho)\)</span> oraz <span
+class="math inline">\(|K_n| = O(n^{r-1})\)</span> mamy <span
+class="math display">\[\begin{gathered}
+\label{eq:1:key}
+        \frac 1n \log \mathbb{P}[L_n \in A]  = O \left(
+\frac{\log(n)}{n} \right) + \frac 1n \log Q_n(a)
+    \\= O \left( \frac{\log(n)}{n} \right) - \min_{k \in K_n \: : \:
+\nu_n(k) \in A} H(\nu_n(k)|\rho).
+    
+\end{gathered}\]</span> Aby zakończyć dowód wystarczy pokazać, że</p>
+<ul>
+<li><p>Zbiór <span class="math inline">\(\bigcup_{n\in \mathbb{N}} \{
+\nu_n(k) \: : \: k \in K_n\}\)</span> jest gęsty w <span
+class="math inline">\(M_1(\Gamma)\)</span>.</p></li>
+<li><p>Funkcja <span class="math inline">\(\nu \mapsto
+H(\nu|\rho)\)</span> jest ciągła na <span
+class="math inline">\(M_1(\Gamma)\)</span>.</p></li>
+</ul>
+<p>Powyższe warunki gwarantują, że dla każdego <span
+class="math inline">\(\nu \in A\)</span> istnieje ciąg <span
+class="math inline">\(\{k_n\}_{n \in \mathbb{N}}\)</span> taki, że <span
+class="math inline">\(k_n \in K_n\)</span> dla każdego <span
+class="math inline">\(n\in \mathbb{N}\)</span>, <span
+class="math display">\[\lim_{n \to \infty} \mathrm{d}(\nu_n(k_n), \nu )
+= 0 , \qquad \lim_{n \to \infty} H(\nu_n(k_n)|rho) =
+H(\nu|\rho).\]</span> Skoro <span class="math inline">\(A\)</span> jest
+zbiorem otwartym powyższe daje <span class="math display">\[\limsup_{n
+\to \infty} \min_{k \in K_n \: : \: \nu_n(k) \in A} H(\nu_n(k)|\rho)
+\leq H(\nu|\rho)\]</span> Skoro powyższa nierówność zachodzi dla każdego
+<span class="math inline">\(\nu \in A\)</span>, <span
+class="math display">\[\limsup_{n \to \infty} \min_{k \in K_n \: : \:
+\nu_n(k) \in A} H(\nu_n(k)|\rho) \leq
+        \min_{\nu \in A} H(\nu|\rho).\]</span> Z drugiej strony
+nierówność <span class="math display">\[\liminf_{n \to \infty} \min_{k
+\in K_n \: : \: \nu_n(k) \in A} H(\nu_n(k)|\rho) \geq
+        \min_{\nu \in A} H(\nu|\rho)\]</span> jest prawdziwa dla każdego
+<span class="math inline">\(A\)</span>. Ostatnie dwa szacowania
+pokazują, że <span class="math display">\[\lim_{n \to \infty} \min_{k
+\in K_n \: : \: \nu_n(k) \in A} H(\nu_n(k)|\rho) =\min_{\nu \in A}
+H(\nu|\rho).\]</span> Odwołanie się do  <a href="#{eq:1:key}"><span
+class="upright"></span></a> kończy dowód. ◻</p>
+</div>
+</body>
+</html>
